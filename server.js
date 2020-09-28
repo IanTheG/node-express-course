@@ -7,27 +7,32 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+/* ------------------------------ */
 
 // A mock object with a GET command
 const mockUserData=[
     {name:'Mark'},
     {name:'Jill'}
     ]
-    app.get('/users', function(req,res){
-         res.json({
-              success: true,
-              message: 'successfully got users. Nice!',
-              users: mockUserData
-         })
+app.get('/users', function(req,res){
+    res.json({
+        success: true,
+        message: 'successfully got users. Nice!',
+        users: mockUserData
     })
+})
 
 /* You just made your first endpoint! This function will respond to a GET request at http://localhost:8000/users with a JSON file, which includes our mockData under the key 'users'. Let's test it out!
 Restart your server (CTRL+C, then run node server.js) since we changed the file. Open a browser and navigate to http://localhost:8000/users
 You should see a JSON file, served up from your terminal!
 */
 
+
+
+/* ------------------------------ */
+
 /* In Express, words with a colon in front of them in the url are treated as variables. You can access the value of each variable through req.params, like this: */
-app.get('/users/:id',function(req,res){
+app.get('/users/:id', function(req,res){
     console.log(req.params.id)
     res.json({
         success: true,
@@ -40,10 +45,10 @@ app.get('/users/:id',function(req,res){
 data associated with an id in your data and return 
 that (instead of just returning the id). */
 
-/* ---------- */
+/* ------------------------------ */
 
 /*  Let's write a function to handle a POST request made to the 'login' endpoint, as if a user was trying to log in: */
-app.post('/login',function(req,res){
+app.post('/login', function(req,res){
     const username=req.body.username;
     const password=req.body.password;
 
@@ -64,16 +69,35 @@ app.post('/login',function(req,res){
     }
 })
 
+/* Notice how we used app.post this time instead of app.get. 
+We also compared the values passed from the request body to see if they match our mock data (which would normally come from a database). 
+If they match, it will send a JSON file with an additional value, where a token could be stored. 
+However, if they don't match, it will return an error message (without the token).
+
+As a security precaution, you should never save passwords directly into your database. 
+Use a tool like bcrypt to save a hashed version, which will be decoded at login.
+*/
+
+/* ------------------------------ */
+
+/* Custom endpoint or folder containing pictures */
+
+const picturesLibrary = [
+    {pic1:'test'}
+]
+app.get('/pictures/',function(req,res){
+    res.json({
+        success: true,
+        message: 'got pictures',
+        pictures: picturesLibrary
+    })
+})
 
 
 
 
 
-
-
-
-
-
+/* ------------------------------ */
 
 // Include this at the end of the server.js file
 /* Starts server on local port: http://localhost:8000 */
