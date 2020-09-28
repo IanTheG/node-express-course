@@ -5,6 +5,7 @@ const express = require('express');
 called app */
 const app = express();
 
+// A mock object with a GET command
 const mockUserData=[
     {name:'Mark'},
     {name:'Jill'}
@@ -17,7 +18,19 @@ const mockUserData=[
          })
     })
 
-
+    /* Words with a colon in front of them are treated
+    like variables in Express. You can then access each
+    one through req.params */
+    app.get('/users/:id',function(req,res){
+        console.log(req.params.id)
+        res.json({
+            success: true,
+            message: 'got one user',
+            user: req.params.id
+        })
+    })
+    
+    
 
 
 
