@@ -1,3 +1,5 @@
+// Run the server in terminal using: node server.js
+
 /* Gives access to aspress library by searching thenode_modules for "express". */
 express = require('express');
 /* Creates an instance of the express constructor called app */
@@ -10,6 +12,8 @@ app.use(bodyParser.json());
 /* ------------------------------ */
 
 // A mock object with a GET command
+/* In Postman, use the GET command with the link set to: http://localhost:8000/users */
+
 const mockUserData=[
     {name:'Mark'},
     {name:'Jill'}
@@ -32,6 +36,8 @@ You should see a JSON file, served up from your terminal!
 /* ------------------------------ */
 
 /* In Express, words with a colon in front of them in the url are treated as variables. You can access the value of each variable through req.params, like this: */
+/* In Postman, use the GET command with the link set to: http://localhost:8000/user/mark or /jill 
+Other usernames will also work and return true, even if not in the mockUserData object. */
 app.get('/users/:id', function(req,res){
     console.log(req.params.id)
     res.json({
@@ -48,6 +54,14 @@ that (instead of just returning the id). */
 /* ------------------------------ */
 
 /*  Let's write a function to handle a POST request made to the 'login' endpoint, as if a user was trying to log in: */
+/* In Postman, use the POST command with the link set to: http://localhost:8000/login
+Under the Body section in Postman, enter the follogin cod block: 
+{
+"username":"billyTheKid",
+"password":"superSecret"
+}
+Postman should return true because the username and password matches the server. 
+Changing the username or password will cause the server to return false. */
 app.post('/login', function(req,res){
     const username=req.body.username;
     const password=req.body.password;
@@ -81,6 +95,7 @@ Use a tool like bcrypt to save a hashed version, which will be decoded at login.
 /* ------------------------------ */
 
 /* Custom endpoint or folder containing pictures */
+/* In Postman, use the GET command with the link set to: http://localhost:8000/pictures */
 
 const picturesLibrary = [
     {pic1:'test'}
